@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brit Edits - Fun & Games</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1 {
+            color: #ff4081;
+            margin-top: 20px;
+            font-size: 2.5rem;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .social-links a {
+            color: white;
+            background-color: #2196F3;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .social-links a:hover {
+            background-color: #0b7dda;
+        }
+
+        .fun-section, .clicker-section {
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .emoji, .rocket, .star, .heart {
+            font-size: 4rem;
+            cursor: pointer;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        .shop button {
+            margin-top: 10px;
+            display: block;
+        }
+
+        .shop button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 10px 0;
+            background-color: #333;
+            color: white;
+        }
+
+        footer a {
+            color: #ff4081;
+        }
+
+        body.dark-mode {
+            background-color: #333;
+            color: #f4f4f9;
+        }
+
+        .social-links a.dark-mode {
+            background-color: #555;
+        }
+
+        button.dark-mode {
+            background-color: #555;
+        }
+
+        /* Chat System Styling */
+        #chatBox {
+            width: 80%;
+            height: 300px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #fff;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        #chatInput {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #chatSubmit {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
+
+        #chatSubmit:hover {
+            background-color: #45a049;
+        }
+
+        #loginForm, #signupForm {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #loginForm input, #signupForm input {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #loginForm button, #signupForm button {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #loginForm button:hover, #signupForm button:hover {
+            background-color: #0b7dda;
+        }
+
+        #signupForm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Brit Edits</h1>
+    <p>Explore fun features and games while learning more about Brit Edits!</p>
+
+    <!-- Social Links -->
+    <div class="social-links">
+        <a href="https://www.youtube.com/@BritEditsreal" target="_blank">YouTube</a>
+        <a href="https://www.instagram.com/brit_official.marl?igsh=MTRwODI0YmcycWw0YQ==" target="_blank">Instagram</a>
+    </div>
+
+    <!-- SignUp Form -->
+    <div id="signupForm">
+        <h3>Create an Account</h3>
+        <input type="text" id="signupUsername" placeholder="Username" />
+        <input type="password" id="signupPassword" placeholder="Password" />
+        <button onclick="signUp()">Sign Up</button>
+        <p>Already have an account? <a href="javascript:void(0)" onclick="showLoginForm()">Login</a></p>
+    </div>
+
+    <!-- Login Form -->
+    <div id="loginForm">
+        <h3>Please log in to chat!</h3>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button onclick="login()">Login</button>
+        <p>Don't have an account? <a href="javascript:void(0)" onclick="showSignUpForm()">Sign Up</a></p>
+    </div>
+
+    <!-- Chat Section -->
+    <div id="chatSection" style="display: none;">
+        <div id="chatBox"></div>
+        <input type="text" id="chatInput" placeholder="Type your message..." />
+        <button id="chatSubmit" onclick="sendMessage()">Send</button>
+    </div>
+
+    <!-- Fun Section -->
+    <div class="fun-section">
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <button onclick="showRandomFact()">Show Random Fact</button>
+        <button onclick="tellJoke()">Tell a Joke</button>
+    </div>
+
+    <!-- Emoji Clicker Game -->
+    <div class="clicker-section">
+        <h2>Emoji Clicker Game</h2>
+        <div>
+            <span class="emoji" onclick="earnPoints('emoji')">😊</span>
+            <span class="rocket" onclick="earnPoints('rocket')">🚀</span>
+            <span class="star" onclick="earnPoints('star')">⭐</span>
+            <span class="heart" onclick="earnPoints('heart')">❤️</span>
+        </div>
+        <p>Points: <span id="points">0</span></p>
+        <div class="shop">
+            <button onclick="buyUpgrade('emojiUpgrade')">Upgrade Emoji Clicker (Cost: 50 points)</button>
+            <button onclick="buyUpgrade('rocketUpgrade')">Upgrade Rocket Clicker (Cost: 100 points)</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Brit Edits. Follow on <a href="https://www.youtube.com/@BritEditsreal" target="_blank">YouTube</a>!</p>
+    </footer>
+
+    <script>
+        // --- User Database (for demo purposes) ---
+        const users = [];
+        let currentUser = null;  // Track the current logged-in user
+
+        // --- Sign-Up System ---
+        function signUp() {
+            const username = document.getElementById('signupUsername').value;
+            const password = document.getElementById('signupPassword').value;
+
+            // Check if username already exists
+            if (users.some(user => user.username === username)) {
+                alert('Username already taken. Please choose another.');
+                return;
+            }
+
+            // Add new user to the users list
+            users.push({ username, password });
+            alert('Sign up successful! You can now log in.');
+            showLoginForm();
+        }
+
+        function showSignUpForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+        }
+
+        function showLoginForm() {
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        // --- Login System ---
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check if the user exists
+            const user = users.find(user => user.username === username && user.password === password);
+            if (user) {
+                currentUser = user.username;  // Set the current logged-in user
+                alert('Login successful!');
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('chatSection').style.display = 'block';
+            } else {
+                alert('Incorrect username or password. Please try again.');
+            }
+        }
+
+        // --- Chat System ---
+        let chatHistory = [];
+
+        // Define some inappropriate words for filtering
+        const forbiddenWords = ['Shit', 'Fuck','Nigger','Nigga','Bitch,'Ass'];  // Add words you want to filter
+
+        function sendMessage() {
+            const message = document.getElementById('chatInput').value;
+            if (message.trim() === '') return;
+
+            // Basic filtering: If message contains forbidden words, block it
+            if (forbiddenWords.some(word => message.includes(word))) {
+                alert('Your message contains inappropriate language. Please refrain from using such words.');
+                return;
+            }
+
+            // Add the message with the username
+            const messageWithUser = `${currentUser}: ${message}`;
+            chatHistory.push(messageWithUser);
+            document.getElementById('chatInput').value = ''; // Clear input field
+
+            // Display the chat
+            updateChat();
+        }
+
+        function updateChat() {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML = ''; // Clear chat box
+
+            // Display all chat messages
+            chatHistory.forEach(msg => {
+                const p = document.createElement('p');
+                p.textContent = msg;
+                chatBox.appendChild(p);
+            });
+
+            // Scroll to the bottom of the chat box
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // --- Emoji Clicker Game ---
+        let points = 0;
+
+        const upgrades = {
+            emojiUpgrade: {
+                cost: 50,
+                increaseRate: 1
+            },
+            rocketUpgrade: {
+                cost: 100,
+                increaseRate: 5
+            }
+        };
+
+        let currentUpgrade = {
+            emojiUpgrade: 1,
+            rocketUpgrade: 1
+        };
+
+        function earnPoints(type) {
+            if (type === 'emoji') points += 1 * currentUpgrade.emojiUpgrade;
+            if (type === 'rocket') points += 5 * currentUpgrade.rocketUpgrade;
+            if (type === 'star') points += 2;
+            if (type === 'heart') points += 3;
+            
+            document.getElementById('points').textContent = points;
+        }
+
+        // Upgrade system for the clicker game
+        function buyUpgrade(upgrade) {
+            if (upgrade === 'emojiUpgrade' && points >= upgrades.emojiUpgrade.cost) {
+                points -= upgrades.emojiUpgrade.cost;
+                currentUpgrade.emojiUpgrade++;
+                alert('Emoji Clicker upgraded!');
+                document.getElementById('points').textContent = points;
+            } else if (upgrade === 'rocketUpgrade' && points >= upgrades.rocketUpgrade.cost) {
+                points -= upgrades.rocketUpgrade.cost;
+                currentUpgrade.rocketUpgrade++;
+                alert('Rocket Clicker upgraded!');
+                document.getElementById('points').textContent = points;
+            } else {
+                alert('Not enough points for this upgrade!');
+            }
+        }
+
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const darkModeButtons = document.querySelectorAll('button');
+            darkModeButtons.forEach(button => button.classList.toggle('dark-mode'));
+        }
+
+        // Show Random Fact
+        function showRandomFact() {
+            const facts = [
+                "Did you know? The first computer programmer was Ada Lovelace.",
+                "The Eiffel Tower can grow by up to 6 inches during the summer due to thermal expansion!",
+                "Bananas are technically berries, but strawberries are not.",
+                "A day on Venus is longer than a year on Venus!"
+            ];
+            alert(facts[Math.floor(Math.random() * facts.length)]);
+        }
+
+        // Tell a Joke
+        function tellJoke() {
+            const jokes = [
+                "Why don’t skeletons fight each other? They don’t have the guts.",
+                "What do you call fake spaghetti? An impasta!",
+                "Why did the scarecrow win an award? Because he was outstanding in his field!",
+                "Why can’t you hear a pterodactyl go to the bathroom? Because the P is silent!"
+            ];
+            alert(jokes[Math.floor(Math.random() * jokes.length)]);
+        }
+    </script>
+</body>
+</html>
